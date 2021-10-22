@@ -13,7 +13,7 @@ It is must more fast and scalable.
 ### To colaborate
 
 Feel free to do this.
-Contact me on telegram or whatsapp (11) 9 7070-1772
+Contact me on telegram https://t.me/anhaabaete
 
 #### About Me
 My name Tiago Neves
