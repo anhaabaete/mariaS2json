@@ -18,6 +18,7 @@ Contact me on telegram https://t.me/anhaabaete
 
 ## To compile
 <code>
+cd mariaS2json/src
 g++ main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient
 </code>
 
@@ -26,7 +27,13 @@ g++ main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient
 - Install apache or another server HTTP
 - Enable CGI pr FastCGI mods
 - Compile and save the compiled file at CGI/FastCGI path
-- Write the service (SQL querys) in .sql files
+- Edit and s2.sample.conf and save at same directory file compiled
+- Change the name s2.sample.conf to s2.conf
+- Write the service (SQL querys) in [anything].sql files at same directory fast/CGI and compiled file
+
+### To test
+
+Access http://[yourhost/domain]/cgi-bin/mariaS2json?_s=[FileNameSQLwithoutExtension]&[field]=[data]...
 
 #### About Me
 My name Tiago Neves
