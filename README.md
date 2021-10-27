@@ -18,6 +18,7 @@ Contact me on telegram https://t.me/anhaabaete
 
 ## To compile
 <code>cd mariaS2json/src</code>
+
 <code>
 g++ main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient
 </code>
