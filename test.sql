@@ -1,1 +1,1 @@
-SELECT JSON_OBECT('proposta',propose) as _message FROM `brazilian_camera_votation`  
+SELECT id,propose FROM `brazilian_camera_votation` 

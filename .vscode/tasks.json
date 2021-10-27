@@ -2,16 +2,15 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++ arquivo de build ativo",
-            "command": "/usr/bin/g++",
+            "label": "C/C++: gcc arquivo de build ativo",
+            "command": "/usr/bin/gcc",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                "../inc/ini.c",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
-                "-L/usr/lib/",
-                "-lmysqlcppconn",
+                "../mariaS2json",
                 "-lmysqlclient"
             ],
             "options": {
@@ -24,7 +23,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "compilador: /usr/bin/g++"
+            "detail": "Tarefa gerada pelo Depurador."
         }
     ],
     "version": "2.0.0"

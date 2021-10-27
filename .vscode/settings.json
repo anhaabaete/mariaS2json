@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "fstream": "cpp"
+        "../ini.h": "c",
+        "stdio.h": "c"
     }
 }
