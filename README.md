@@ -18,7 +18,7 @@ Contact me on telegram https://t.me/anhaabaete
 
 ## To compile
 <code>
-g++ -o mariaS2json mariaS2json.cpp -lmysqlcppconn -lmysqlclient
+g++ main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient
 </code>
 
 ### Configuration
