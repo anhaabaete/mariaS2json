@@ -235,7 +235,7 @@ static void createSecurityKey(char* getseed) {
  * This function get the querystring from URL and pick a file service ([..].sql)
  * Replace data from querystring into a SQL string
  **/
-static char *buildQuery(char* envs, char* file_serv_name) {
+static char* buildQuery(char* envs, char* file_serv_name) {
 
     char *query = strdup(envs),  /* duplicate array, &array is not char** */
         *tokens = query,
@@ -330,8 +330,7 @@ static void flushJsonData(MYSQL *conn, char *envs, char * file_serv_name) {
     configuration cfg;
 
      /* send SQL query */
-    const char *sqlquery = buildQuery(envs,file_serv_name);
-    if (mysql_query(conn,sqlquery)) {
+    if (mysql_query(conn, buildQuery(envs,file_serv_name))) {
         s2Error(mysql_error(conn));
     }
 
