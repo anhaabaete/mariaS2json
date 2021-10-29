@@ -20,7 +20,7 @@ Contact me on telegram https://t.me/anhaabaete
 <code>cd mariaS2json/src</code>
 
 <code>
-g++ main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient -crypto -lssl
+gcc main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient -crypto -lssl
 </code>
 
 ### Configuration
