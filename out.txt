@@ -1,0 +1,5 @@
+Status: 250 OK
+Content-type:application/json
+Set-Cookie: securityKey=75c2604a00996eca67e703d13a9d4bef
+
+{"error":1,"data":["request without service name"]}

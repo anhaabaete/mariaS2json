@@ -4,3 +4,6 @@
 /mariaS2json
 /test.sql
 /.vscode
+/login.sql
+/cgi-bin
+/votosdeps.sql

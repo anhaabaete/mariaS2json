@@ -11,7 +11,9 @@
                 "../inc/ini.c",
                 "-o",
                 "../mariaS2json",
-                "-lmysqlclient"
+                "-lmysqlclient",
+                "-lcrypto",
+                "-lssl",
             ],
             "options": {
                 "cwd": "${fileDirname}"
