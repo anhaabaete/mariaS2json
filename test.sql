@@ -1,1 +1,0 @@
-SELECT id,propose FROM `brazilian_camera_votation` 
