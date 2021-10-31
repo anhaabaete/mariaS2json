@@ -1,8 +1,8 @@
 /vscode
 /src/mariaS2json
-/S2.conf
 /mariaS2json
 /.vscode
 /login.sql
 /cgi-bin
 /votosdeps.sql
+/s2.conf2
