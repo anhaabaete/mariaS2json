@@ -242,8 +242,8 @@ static char *getQuerySQL(char* envs, char* file_serv_name) {
         *tokens = query,
         *p = query;
 
-    if ((strstr(query,"$user=")==NULL ||
-        strstr(query,"$password=")==NULL) &&
+    if ((strstr(query,"s2user=")==NULL ||
+        strstr(query,"s2password=")==NULL) &&
         strcmp("login.sql",file_serv_name)==0) {
             s2Error("To login you need two arguments user and password");
     }
@@ -354,7 +354,6 @@ static void flushJsonData(MYSQL *conn, char *envs, char * file_serv_name, char* 
     /********************************
      * Start flushing data response *
      *******************************/
-    
     
     char* comma = ""; // comma start void becouse only second row need separate with it
     printf("{\"error\":0,\"data\":["); // erro 0 (nothing), and data populate open
