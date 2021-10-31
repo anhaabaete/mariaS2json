@@ -235,14 +235,15 @@ static void createSecurityKey(char* getseed) {
  * This function get the querystring from URL and pick a file service ([..].sql)
  * Replace data from querystring into a SQL string
  **/
-static char* buildQuery(char* envs, char* file_serv_name) {
+static char *getQuerySQL(char* envs, char* file_serv_name) {
 
-    char *query = strdup(envs),  /* duplicate array, &array is not char** */
+
+    char *query = strdup(envs),  
         *tokens = query,
         *p = query;
 
-    if ((strstr(query,"user=")==NULL ||
-        strstr(query,"password=")==NULL) &&
+    if ((strstr(query,"$user=")==NULL ||
+        strstr(query,"$password=")==NULL) &&
         strcmp("login.sql",file_serv_name)==0) {
             s2Error("To login you need two arguments user and password");
     }
@@ -259,16 +260,22 @@ static char* buildQuery(char* envs, char* file_serv_name) {
     rewind( fp );
 
    buffer = calloc( 1, lSize+1 );
-    if( !buffer ) fclose(fp),fputs("memory alloc fails",stderr),exit(1);
+    if( !buffer ) { 
+        fclose(fp);
+        s2Error("memory alloc fails");
+    }
 
-    /* copy the file into the buffer */
-    if( 1!=fread( buffer , lSize, 1 , fp) )
-    fclose(fp),free(buffer),fputs("entire read fails",stderr),exit(1);
-
-    /* do your work here, buffer is a string contains the whole text */
+    //copy the file into the buffer
+    if( 1!=fread( buffer , lSize, 1 , fp) ) {
+        fclose(fp);
+        free(buffer);
+        s2Error("entire read fails");
+    }
+    
+    /// do your work here, buffer is a string contains the whole text
 
     fclose(fp);
-    char* fimq; 
+    char *fimq; 
     fimq = strdup(buffer);
 
     free(buffer);
@@ -281,16 +288,14 @@ static char* buildQuery(char* envs, char* file_serv_name) {
             char * pch;
             pch = strstr(strdup(fimq),var);
             if (pch != NULL) {
-                char rvar[] = "$";
-                strcat(rvar,var);
-                char* repl = replaceWord(fimq, rvar, strdup(val));
+                char* repl = replaceWord(fimq, var, strdup(val));
                 fimq = repl;
             }
         }
            
     }
+
     
-    fimq[strlen(fimq)] = '\0';
     return fimq;
 }
 
@@ -322,15 +327,16 @@ char* type_enbrace(enum enum_field_types type) {
     }
 }
 
-static void flushJsonData(MYSQL *conn, char *envs, char * file_serv_name) {
+static void flushJsonData(MYSQL *conn, char *envs, char * file_serv_name, char* debug) {
 
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-    configuration cfg;
-
      /* send SQL query */
-    if (mysql_query(conn, buildQuery(envs,file_serv_name))) {
+    char *sql_query;
+    sql_query = getQuerySQL(envs,file_serv_name);
+
+    if (mysql_query(conn, sql_query)) {
         s2Error(mysql_error(conn));
     }
 
@@ -361,8 +367,6 @@ static void flushJsonData(MYSQL *conn, char *envs, char * file_serv_name) {
 
         for(i = 0; i < num_fields; i++) {
 
-            char* b = type_enbrace(fields[i].type);
-
             printf("%s\"%s\":\"%s\"", 
                 commaf, //put a comma wheter first field it's will be void, and second it's will be filed
                 fields[i].name, 
@@ -381,8 +385,8 @@ static void flushJsonData(MYSQL *conn, char *envs, char * file_serv_name) {
     }   
     printf("]");
     
-    if (strcmp(cfg.debug,"true")==0) {
-        printf(",\"execQuery\":\"%s\"",sqlquery);
+    if (strcmp(debug,"true")==0) {
+        printf(",\"execQuery\":\"%s\"",sql_query);
     }
     
     printf("}"); // close JSON
@@ -399,8 +403,7 @@ static void updateSKC(MYSQL *conn) {
         
         strcat(query_up_u,security_key);
 
-        strcat(query_up_u,"' WHERE id =");
-        strcat(query_up_u,user_id);
+        strcat(query_up_u,"';");
             
         if (mysql_query(conn,query_up_u)) {
             s2Error(mysql_error(conn));
@@ -434,8 +437,6 @@ int main() {
     
     //set connection 
      MYSQL *conn;
-     MYSQL_RES *res;
-     MYSQL_ROW row;
 
      conn = mysql_init(NULL);
      /* Connect to database */
@@ -457,7 +458,7 @@ int main() {
 
     
     //flush JSON
-    flushJsonData(conn, envs, file_serv_name);
+    flushJsonData(conn, envs, file_serv_name, cfg.debug);
 
 
     /**
