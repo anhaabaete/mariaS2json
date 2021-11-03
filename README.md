@@ -17,10 +17,10 @@ Feel free to do this.
 Contact me on telegram https://t.me/anhaabaete
 
 ## To compile
-<code>cd mariaS2json/src</code>
+<code>cd mariaS2json/</code>
 
 <code>
-gcc main.c ../inc/ini.c -o ../mariaS2json -lmysqlclient -lcrypto -lssl
+gcc src/main.c inc/ini.c -o mariaS2json -lmysqlclient -lcrypto -lssl
 </code>
 
 ### Configuration
